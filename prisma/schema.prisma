@@ -1,0 +1,166 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  OWNER
+  ADMIN
+  EDITOR
+  TRANSLATOR
+  VIEWER
+}
+
+enum AccessType {
+  PUBLIC
+  SCHEDULED
+  EARLY_ACCESS
+  PRIVATE
+}
+
+enum ReadingStatus {
+  READING
+  PLANNED
+  COMPLETED
+  DROPPED
+}
+
+model User {
+  id            String   @id @default(cuid())
+  telegramId    String?  @unique
+  email         String?  @unique
+  name          String?
+  avatar        String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  teamMembers   TeamMember[]
+  chapterProgress ChapterProgress[]
+  bookmarks     Bookmark[]
+  readingLists  ReadingList[]
+  accounts      Account[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  provider          String
+  providerAccountId String
+  accessToken       String?
+  refreshToken      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Team {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?
+  avatar      String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  members     TeamMember[]
+  works       Work[]
+}
+
+model TeamMember {
+  id        String   @id @default(cuid())
+  role      Role     @default(VIEWER)
+  createdAt DateTime @default(now())
+
+  userId    String
+  teamId    String
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  team      Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, teamId])
+}
+
+model Work {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  cover       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  teamId      String
+  team        Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  translations Translation[]
+  readingLists ReadingList[]
+}
+
+model Translation {
+  id        String   @id @default(cuid())
+  language  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  workId    String
+  work      Work @relation(fields: [workId], references: [id], onDelete: Cascade)
+
+  chapters  Chapter[]
+}
+
+model Chapter {
+  id            String     @id @default(cuid())
+  number        Float
+  title         String?
+  content       String
+  accessType    AccessType @default(PUBLIC)
+  scheduledAt   DateTime?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  translationId String
+  translation   Translation @relation(fields: [translationId], references: [id], onDelete: Cascade)
+
+  progress      ChapterProgress[]
+  bookmarks     Bookmark[]
+}
+
+model ChapterProgress {
+  id        String   @id @default(cuid())
+  position  Int      @default(0)
+  updatedAt DateTime @updatedAt
+
+  userId    String
+  chapterId String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chapter   Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, chapterId])
+}
+
+model Bookmark {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  userId    String
+  chapterId String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chapter   Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, chapterId])
+}
+
+model ReadingList {
+  id        String        @id @default(cuid())
+  status    ReadingStatus
+  updatedAt DateTime      @updatedAt
+
+  userId    String
+  workId    String
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  work      Work @relation(fields: [workId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, workId])
+}
