@@ -153,7 +153,7 @@ const platformFeatures = [
 
 export default function Home() {
     return (
-        <div className="min-h-screen bg-zinc-950 text-zinc-300 p-4 md:p-10 font-sans">
+        <div className="min-h-screen text-zinc-300 p-4 md:p-10 font-sans">
             <div className="max-w-6xl mx-auto border border-zinc-800">
                 {/* ── Header ── */}
                 <header className="grid grid-cols-2 md:grid-cols-3 border-b border-zinc-800">

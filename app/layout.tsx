@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import WebBackground from "@/components/web-background";
 
 const jetbrainsMono = JetBrains_Mono({
     subsets: ["latin"],
@@ -68,8 +69,11 @@ export default function RootLayout({
                 jetbrainsMono.variable,
             )}
         >
-            <body className="min-h-full flex flex-col overflow-x-hidden">
-                {children}
+            <body className="min-h-full flex flex-col overflow-x-hidden bg-zinc-950">
+                <WebBackground />
+                <div className="relative z-10 flex flex-col flex-1">
+                    {children}
+                </div>
             </body>
         </html>
     );
