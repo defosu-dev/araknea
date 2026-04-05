@@ -1,3 +1,4 @@
+import { WebLogo } from "@/components/web-logo";
 import {
     BookOpen,
     Lock,
@@ -16,72 +17,6 @@ import {
 const IconTelegram = () => (
     <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
         <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.941z" />
-    </svg>
-);
-
-const WebLogo = () => (
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <circle
-            cx="14"
-            cy="14"
-            r="13"
-            stroke="#d97706"
-            strokeWidth="1"
-            strokeOpacity="0.6"
-        />
-        <circle
-            cx="14"
-            cy="14"
-            r="8"
-            stroke="#d97706"
-            strokeWidth="0.75"
-            strokeOpacity="0.4"
-        />
-        <circle
-            cx="14"
-            cy="14"
-            r="3.5"
-            stroke="#d97706"
-            strokeWidth="0.75"
-            strokeOpacity="0.3"
-        />
-        <line
-            x1="14"
-            y1="1"
-            x2="14"
-            y2="27"
-            stroke="#d97706"
-            strokeWidth="0.75"
-            strokeOpacity="0.35"
-        />
-        <line
-            x1="1"
-            y1="14"
-            x2="27"
-            y2="14"
-            stroke="#d97706"
-            strokeWidth="0.75"
-            strokeOpacity="0.35"
-        />
-        <line
-            x1="3.1"
-            y1="3.1"
-            x2="24.9"
-            y2="24.9"
-            stroke="#d97706"
-            strokeWidth="0.75"
-            strokeOpacity="0.35"
-        />
-        <line
-            x1="24.9"
-            y1="3.1"
-            x2="3.1"
-            y2="24.9"
-            stroke="#d97706"
-            strokeWidth="0.75"
-            strokeOpacity="0.35"
-        />
-        <circle cx="14" cy="14" r="1.5" fill="#d97706" fillOpacity="0.8" />
     </svg>
 );
 
